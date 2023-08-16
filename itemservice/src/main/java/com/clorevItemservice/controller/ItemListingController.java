@@ -2,17 +2,14 @@ package com.clorevItemservice.controller;
 
 import com.clorevItemservice.common.ApiResponse;
 import com.clorevItemservice.dto.ItemDto;
-import com.clorevItemservice.entities.Category;
-import com.clorevItemservice.entities.MainCategory;
-import com.clorevItemservice.entities.Man;
-import com.clorevItemservice.entities.Woman;
+import com.clorevItemservice.entities.*;
 import com.clorevItemservice.service.ItemlistingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ItemListingController {
@@ -53,9 +50,10 @@ public class ItemListingController {
 
 
     @GetMapping("categories/{mainId}")
-    public List<Category> getCategories(@PathVariable int mainId){
-        return itemlistingService.fetchCategories(mainId);
+    public ResponseEntity<MainCategory> getCategories(@PathVariable int mainId){
+        return new ResponseEntity<MainCategory>(itemlistingService.fetchCategories(mainId).get(),HttpStatus.OK);
     }
+
 
 
 

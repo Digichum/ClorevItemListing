@@ -1,5 +1,8 @@
 package com.clorevItemservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +18,24 @@ public class MainCategory {
     @Column(name = "main_category_name")
     private String mainCategoryName;
 
-    @OneToMany(mappedBy = "mainCategoryList")
+    @OneToMany(mappedBy = "mainCategory")
+    @JsonManagedReference(value = "categories-mainCategory")
     private List<Category> categories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "manItemList")
+    @OneToMany(mappedBy = "mainCategory")
+    @JsonManagedReference(value = "manItemList-mainCategory")
     private List<Man> manItemList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "womanItemList")
+    @OneToMany(mappedBy = "mainCategory")
+    @JsonManagedReference(value = "womanItemList-mainCategory")
     private List<Woman> womanItemList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "kidItemList")
+    @OneToMany(mappedBy = "mainCategory")
+    @JsonManagedReference(value = "kidItemList-mainCategory")
     private List<Kid> kidItemList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "householdItemList")
+    @OneToMany(mappedBy = "mainCategory")
+    @JsonManagedReference(value = "householdItemList-mainCategory")
     private List<Household> householdItemList = new ArrayList<>();
 
 

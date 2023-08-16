@@ -1,5 +1,8 @@
 package com.clorevItemservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +20,24 @@ public class Category {
 
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "manList-mainCategory")
     private List<Man> manList = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "womanList-mainCategory")
     private List<Woman> womanList = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "kidList-mainCategory")
     private List<Kid> kidList = new ArrayList<>();
 //    @JoinColumn(name = "category_fkey")
 //    private List<Kid> kidList = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "householdList-mainCategory")
     private List<Household> householdList = new ArrayList<>();
 //    @JoinColumn( name = "category_fkey")
 //    private List<Household> householdList = new ArrayList<>();
@@ -44,6 +51,7 @@ public class Category {
 
     @ManyToOne
     @JoinColumn(name = "maincategory_id")
+    @JsonBackReference(value = "categories-mainCategory")
     private MainCategory mainCategory;
 
     public Category() {

@@ -1,5 +1,8 @@
 package com.clorevItemservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -25,10 +28,12 @@ public class Household {
 
     @ManyToOne
     @JoinColumn(name = "category_household")
+    @JsonBackReference(value = "householdList-mainCategory")
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "main_ctg_id")
+    @JsonBackReference(value = "householdItemList-mainCategory")
     private MainCategory mainCategory;
 
     public Household() {

@@ -7,9 +7,7 @@ import com.clorevItemservice.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ItemListingServiceImpl implements ItemlistingService {
@@ -84,8 +82,13 @@ public class ItemListingServiceImpl implements ItemlistingService {
 //        category.setManList(man1);
         categoryRepository.save(category);
         manlist.forEach(man -> man.setCategory(category));
+        category.setManList(manlist);
         manlist.forEach(man ->man.setMainCategory(mainCategory));
         manlist.forEach(man -> manItemRepository.save(man));
+
+
+        category.setKidList(kidList);
+        category.setHouseholdList(householdList);
 
 //        List<Man> manList1 = mainCategory.getManItemList();
 //        manList1.forEach(man -> man.setMainCategory(mainCategory));
@@ -103,6 +106,7 @@ public class ItemListingServiceImpl implements ItemlistingService {
 //        category1.setWomanList(women1);
         categoryRepository.save(category1);
         womenlist.forEach(woman -> woman.setCategory(category1));
+        category1.setWomanList(womenlist);
         womenlist.forEach(woman -> womanItemRepository.save(woman));
 
         Category category2 = new Category();
@@ -113,6 +117,7 @@ public class ItemListingServiceImpl implements ItemlistingService {
 //        category1.setWomanList(women1);
         categoryRepository.save(category2);
         kidList.forEach(kid -> kid.setCategory(category2));
+        category2.setKidList(kidList);
         kidList.forEach(kid -> kidItemRepository.save(kid));
 //        kidList.forEach(kid -> kidItemRepository.findById(kid.getKidItemId()));
 //        for(Kid kid: kidList){
@@ -166,24 +171,49 @@ public class ItemListingServiceImpl implements ItemlistingService {
 
     @Override
     public MainCategory saveItemsInDatabase(MainCategory mainCategory) {
+        MainCategory mainCategory1 = mainCategoryRepository.findById(mainCategory.getMainId()).get();
 
+//        Category category = new Category();
+//        category.setCategoryId(1);
+//        category.setCategoryName("Man");
+//        categoryRepository.save(category);
+//
 //        Category category1 = new Category();
-//        category1.setManList(mainCategory.getCategories());
-        MainCategory mainCategory1 = new MainCategory();
-        mainCategory1.setMainId(mainCategory.getMainId());
-        mainCategory1.setMainCategoryName(mainCategory.getMainCategoryName());
-        mainCategoryRepository.save(mainCategory1);
+// //       category.setCategoryId(2);
+//        category.setCategoryName("Woman");
+// //       categoryRepository.save(category1);
+//
+//        Category category2 = new Category();
+//  //      category.setCategoryId(3);
+//        category.setCategoryName("Kid");
+//  //      categoryRepository.save(category2);
+//
+//        Category category3 = new Category();
+// //       category.setCategoryId(4);
+//        category.setCategoryName("Household");
+// //       categoryRepository.save(category3);
 
-        Category category = new Category();
-        category.setCategoryName(mainCategory.getMainCategoryName());
-        category.setMainCategory(mainCategory1);
+        List<Man>men = mainCategory.getManItemList();
+        men.forEach(man -> man.setCategory(categoryRepository.findById(1).get()));
+        men.forEach(man -> man.setMainCategory(mainCategory1));
+        men.forEach(man -> manItemRepository.save(man));
 
-        Man man= new Man();
-        man.setManItemName("");
+        List<Woman> women = mainCategory.getWomanItemList();
+        women.forEach(woman -> woman.setCategory(categoryRepository.findById(2).get()));
+        women.forEach(woman -> woman.setMainCategory(mainCategory1));
+        women.forEach(woman -> womanItemRepository.save(woman));
 
+        List<Kid> kids = mainCategory.getKidItemList();
+        kids.forEach(kid -> kid.setCategory(categoryRepository.findById(3).get()));
+        kids.forEach(kid -> kid.setMainCategory(mainCategory1));
+        kids.forEach(kid -> kidItemRepository.save(kid));
 
+        List<Household> households = mainCategory.getHouseholdItemList();
+        households.forEach(household -> household.setCategory(categoryRepository.findById(4).get()));
+        households.forEach(household -> household.setMainCategory(mainCategory1));
+        households.forEach(household -> householdItemRepository.save(household));
 
-        return mainCategoryRepository.save(mainCategory);
+        return mainCategoryRepository.save(mainCategory1);
     }
 
     @Override
@@ -200,8 +230,17 @@ public class ItemListingServiceImpl implements ItemlistingService {
     }
 
   @Override
-      public List<Category> fetchCategories(int mainId) {
-        MainCategory mainCategory = mainCategoryRepository.findById(mainId).get();
+      public Optional<MainCategory> fetchCategories(int mainId) {
+//        MainCategory mainCategory = mainCategoryRepository.findById(mainId).get();
+//
+//      List<Kid> kidList = mainCategory.getKidItemList();
+//
+//      Map<String, List<String>> totalItems = new HashMap<>();
+
+      //        List<Category>categories = mainCategory.getCategories();
+//        categories.forEach(category -> category.getCategoryId());
+//        categories.forEach(category -> category.getCategoryName());
+
       //        categoryList.forEach(category -> category.getKidList());
 //        for(Category category: categoryList){
 //            category.getMainCategory();
@@ -212,7 +251,8 @@ public class ItemListingServiceImpl implements ItemlistingService {
 //            category.getHouseholdList();
 //            category.getKidList();
 //        }
-        return categoryRepository.findAllByMainCategory(mainCategory);
+//        return categoryRepository.findAllByMainCategory(mainCategory);
+      return mainCategoryRepository.findById(mainId);
     }
 
 }

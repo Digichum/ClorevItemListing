@@ -1,5 +1,8 @@
 package com.clorevItemservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -25,10 +28,12 @@ public class Kid {
 
     @ManyToOne
     @JoinColumn(name = "kid_category")
+    @JsonBackReference(value = "kidList-mainCategory")
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "main_ctg_fkey")
+    @JsonBackReference(value = "kidItemList-mainCategory")
     private MainCategory mainCategory;
 
     public Kid() {

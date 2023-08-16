@@ -1,12 +1,9 @@
 package com.clorevItemservice.service;
 
 import com.clorevItemservice.dto.ItemDto;
-import com.clorevItemservice.entities.Category;
-import com.clorevItemservice.entities.MainCategory;
-import com.clorevItemservice.entities.Man;
-import com.clorevItemservice.entities.Woman;
+import com.clorevItemservice.entities.*;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface ItemlistingService {
     public void saveItem(ItemDto itemDto);
@@ -20,5 +17,5 @@ public interface ItemlistingService {
     public Category saveCategoryWithItems(Category category);
 
 
-    List<Category> fetchCategories(int mainId);
+    Optional<MainCategory> fetchCategories(int mainId);
 }
